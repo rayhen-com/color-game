@@ -27,77 +27,85 @@ const greenButton = document.getElementById('green-button');
 const blueButton = document.getElementById('blue-button');
 
 // Get Box Element
-const box = document.getElementById('box')
+const box = document.getElementById('box');
 
-result = document.getElementById('result')
+// Get Result Element
+const result = document.getElementById('result');
+
+// Get Body Element
+const bodyElement = document.getElementsByTagName('body');
+
+// Get "Question" Element
+const questionText = document.getElementById('question');
+
+// Hide elements after guess Function
+function hideElements() {
+    questionText.textContent = '';
+    redButton.style.display = 'none';
+    greenButton.style.display = 'none';
+    blueButton.style.display = 'none';
+}
+
+// Function if guess is correct
+function correctGuess() {
+    result.textContent = "Correct!";
+    result.style.color = '#007B16';
+    document.body.style.background = '#6FCB9F';
+    hideElements();
+};
+
+// Function if guess is wrong
+function wrongGuess() {
+    result.textContent = "Wrong!";
+    result.style.color = '#B70003';
+    document.body.style.background = '#E69598';
+    hideElements();
+};
 
 // Change box background color
 nextButton.addEventListener('click', function randomColor(event) {
 
     // Reset state
-    result.innerHTML = ""
-    redButton.disabled = false
-    greenButton.disabled = false
-    blueButton.disabled = false
+    result.textContent = "";
+    document.body.style.background = '#ffffff';
+    questionText.innerHTML= "What is the main color?";
+    redButton.style.display = 'block';
+    greenButton.style.display = 'block';
+    blueButton.style.display = 'block';
+
     
     // Generate rgb values
-    red = getRandomRed(0, 256)
-    green = getRandomGreen(0, 256)
-    blue = getRandomBlue(0, 256)
+    red = getRandomRed(0, 256);
+    green = getRandomGreen(0, 256);
+    blue = getRandomBlue(0, 256);
 
     // Change background color of box
-    box.style.backgroundColor = 'rgb(' + [red, green, blue].join(',') + ')'
+    box.style.backgroundColor = 'rgb(' + [red, green, blue].join(',') + ')';
 
     // Check if red is the dominant color
     redButton.addEventListener('click', function redClick(event) {
         if (red > blue && red > green) {
-            result.innerHTML = "Correct!"
-            redButton.disabled = true
-            greenButton.disabled = true
-            blueButton.disabled = true
-            result.style.color = '#007B16'
+            correctGuess();
         } else {
-            result.innerHTML = "Wrong"
-            redButton.disabled = true
-            greenButton.disabled = true
-            blueButton.disabled = true
-            result.style.color = '#B70003'
+            wrongGuess();
         }
     });
 
     // Check if green is the dominant color
     greenButton.addEventListener('click', function greenClick(event) {
         if (green > red && green > blue) {
-            result.innerHTML = "Correct!"
-            redButton.disabled = true
-            greenButton.disabled = true
-            blueButton.disabled = true
-            result.style.color = '#007B16'
+            correctGuess();
         } else {
-            result.innerHTML = "Wrong"
-            redButton.disabled = true
-            greenButton.disabled = true
-            blueButton.disabled = true
-            result.style.color = '#B70003'
+            wrongGuess();
         }
     });
 
     // Check if blue is the dominant color
     blueButton.addEventListener('click', function blueClick(event) {
         if (blue > red && blue > green) {
-            result.innerHTML = "Correct!"
-            redButton.disabled = true
-            greenButton.disabled = true
-            blueButton.disabled = true
-            result.style.color = '#007B16'
+            correctGuess();
         } else {
-            result.innerHTML = "Wrong"
-            redButton.disabled = true
-            greenButton.disabled = true
-            blueButton.disabled = true
-            result.style.color = '#B70003'
-
+            wrongGuess();
         }
     });
-
 });
